@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ECE7DF">
+<meta name="color-scheme" content="light">
+<title>איפה אני יושב? | עדי וגל</title>
+<style>
+:root {
+  /* primitive — sampled from the invitation */
+  --paper-100: #F6F2EB;
+  --paper-200: #ECE7DF;
+  --paper-300: #DED5C9;
+  --ink-900: #4E3626;
+  --ink-700: #6F4F37;
+  --ink-500: #765E4D;
+  --ink-300: #B49C87;
+
+  /* semantic */
+  --bg: var(--paper-200);
+  --surface: var(--paper-100);
+  --text: var(--ink-900);
+  --text-accent: var(--ink-700);
+  --text-muted: var(--ink-500);
+  --border: var(--paper-300);
+  --focus: var(--ink-700);
+
+  /* SF Pro / SF Hebrew on Apple devices, native system font elsewhere */
+  --font-system: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Arial Hebrew", sans-serif;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* component */
+  --card-radius: 4px;
+  --card-frame: color-mix(in srgb, var(--ink-300) 70%, transparent);
+  --input-radius: 999px;
+  --shadow-paper: 0 1px 2px rgb(78 54 38 / .08), 0 12px 32px -12px rgb(78 54 38 / .22);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+
+body {
+  min-height: 100dvh;
+  background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .21 0 0 0 0 .15 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color: var(--text);
+  font-family: var(--font-system);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+main {
+  max-width: 480px;
+  margin-inline: auto;
+  padding: max(var(--space-5), env(safe-area-inset-top)) var(--space-4) var(--space-7);
+  text-align: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.invitation {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1080 / 1350;
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-paper);
+  background: var(--surface);
+}
+
+.hero-text { padding-block: var(--space-6) var(--space-3); }
+.hero-text h1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-accent);
+  margin: 0;
+}
+.hero-text p { margin: var(--space-2) 0 0; color: var(--text-muted); font-size: 15px; }
+.hero.has-image .hero-text { display: none; }
+.hero:not(.has-image) .invitation { display: none; }
+
+.divider {
+  display: block;
+  width: 140px;
+  height: 16px;
+  margin: var(--space-6) auto var(--space-5);
+  color: var(--ink-300);
+}
+
+.finder label {
+  display: block;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--text-accent);
+  margin-bottom: var(--space-2);
+}
+.finder .hint {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.search input {
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-3) var(--space-5);
+  font: inherit;
+  font-size: 20px;
+  color: var(--text);
+  text-align: center;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--input-radius);
+  box-shadow: inset 0 1px 2px rgb(78 54 38 / .06);
+  outline: none;
+  appearance: none;
+}
+.search input::placeholder { color: var(--text-muted); opacity: .75; }
+.search input:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
+}
+.search input::-webkit-search-cancel-button { display: none; }
+
+.results { margin-top: var(--space-5); min-height: 140px; }
+
+.status {
+  margin: var(--space-4) auto;
+  max-width: 34ch;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.card {
+  position: relative;
+  margin: 0 0 var(--space-3);
+  padding: var(--space-5) var(--space-4);
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-paper);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--card-frame);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.card .name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.3;
+}
+.card .sub { margin: 0; color: var(--text-muted); font-size: 15px; }
+.card .table-word {
+  margin: var(--space-3) 0 0;
+  color: var(--text-accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+.card .table-num {
+  margin: 0;
+  font-weight: 700;
+  font-size: 76px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-accent);
+}
+
+.card.compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  text-align: start;
+}
+.card.compact .table-word { margin: 0; text-align: center; }
+.card.compact .table-num { font-size: 40px; text-align: center; }
+
+.help {
+  margin: var(--space-6) auto 0;
+  max-width: 32ch;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero" id="hero">
+    <img class="invitation" id="invitation" src="invitation.jpg"
+         alt="ההזמנה לחתונה של עדי וגל: 22.09.2026 ביקב בנימינה, נפגשים ב-18:30 ומתחתנים ב-19:30">
+    <div class="hero-text">
+      <h1>עדי וגל</h1>
+      <p>יום שלישי · 22.09.2026 · יקב בנימינה</p>
+    </div>
+  </header>
+
+  <svg class="divider" viewBox="0 0 140 16" aria-hidden="true">
+    <path d="M2 9c14-4 26 3 40-1s22-4 28 0M70 8c6 4 14 4 28 0s26-3 40 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="70" cy="8" r="2.2" fill="currentColor"/>
+  </svg>
+
+  <section class="finder">
+    <label for="q">איפה אתם יושבים?</label>
+    <p class="hint" id="hint">הקלידו שם משפחה</p>
+    <div class="search">
+      <input id="q" type="search" inputmode="search" autocomplete="off" autocorrect="off"
+             spellcheck="false" enterkeyhint="search" placeholder="למשל: כהן"
+             aria-describedby="hint">
+    </div>
+    <div class="results" id="results" aria-live="polite"></div>
+  </section>
+
+  <p class="help">לא מצאתם? גשו לעמדת הקבלה בכניסה ונשמח לעזור</p>
+</main>
+
+<script src="guests.js"></script>
+<script>
+(() => {
+  const hero = document.getElementById("hero");
+  const img = document.getElementById("invitation");
+  const showImage = () => hero.classList.add("has-image");
+  const hideImage = () => hero.classList.remove("has-image");
+  if (img.complete) img.naturalWidth ? showImage() : hideImage();
+  img.addEventListener("load", showImage);
+  img.addEventListener("error", hideImage);
+
+  const FINALS = { "ך": "כ", "ם": "מ", "ן": "נ", "ף": "פ", "ץ": "צ" };
+  const norm = s => String(s ?? "")
+    .toLowerCase()
+    .replace(/[֑-ׇ]/g, "")
+    .replace(/[ךםןףץ]/g, c => FINALS[c])
+    .replace(/[\-–—'"׳״`.,()]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const compactNorm = s => norm(s).replace(/ /g, "");
+
+  const guests = () => Array.isArray(window.GUESTS) ? window.GUESTS : [];
+
+  // Each query word must match a last name (prefix, or anywhere) or a first name,
+  // so "כהן", "בן דוד" and "משה כהן" all work.
+  function search(raw) {
+    const q = compactNorm(raw);
+    if (q.length < 2) return null;
+    const words = norm(raw).split(" ").filter(Boolean);
+    const starts = [], contains = [];
+    for (const g of guests()) {
+      const lasts = String(g.last ?? "").split("/").map(compactNorm).filter(Boolean);
+      const first = compactNorm(g.first);
+      if (lasts.some(l => l.startsWith(q))) { starts.push(g); continue; }
+      const all = words.every(w => lasts.some(l => l.includes(w)) || first.includes(w));
+      if (all) contains.push(g);
+    }
+    return starts.concat(contains);
+  }
+
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const out = document.getElementById("results");
+  const input = document.getElementById("q");
+
+  const status = text => `<p class="status">${text}</p>`;
+
+  function card(g, compact) {
+    const who = `<p class="name">${esc(g.last)}</p>${g.first ? `<p class="sub">${esc(g.first)}</p>` : ""}`;
+    const table = `<p class="table-word">שולחן</p><p class="table-num">${esc(g.table)}</p>`;
+    return compact
+      ? `<article class="card compact"><div>${who}</div><div>${table}</div></article>`
+      : `<article class="card">${who}${table}</article>`;
+  }
+
+  function render() {
+    if (guests().length === 0) {
+      out.innerHTML = input.value.trim()
+        ? status("סידור השולחנות עוד לא פורסם. חזרו לכאן ביום החתונה, או גשו לעמדת הקבלה.")
+        : "";
+      return;
+    }
+    const res = search(input.value);
+    if (res === null) { out.innerHTML = ""; return; }
+    if (res.length === 0) {
+      out.innerHTML = status("לא מצאנו את השם הזה. נסו רק את תחילת שם המשפחה, או כתיב אחר.");
+      return;
+    }
+    if (res.length > 12) {
+      out.innerHTML = status("יש הרבה תוצאות. הקלידו עוד כמה אותיות.");
+      return;
+    }
+    out.innerHTML = res.map(g => card(g, res.length > 2)).join("");
+  }
+
+  let timer;
+  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 120); });
+  input.addEventListener("keydown", e => { if (e.key === "Enter") { input.blur(); render(); } });
+})();
+</script>
+</body>
+</html>
